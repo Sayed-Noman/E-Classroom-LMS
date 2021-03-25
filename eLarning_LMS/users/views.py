@@ -1,9 +1,13 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from users.forms import UserProfileInfoForm,UserForm
+from django.contrib.auth import authenticate,login,logout
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
+
 
 def index(request):
-    return HttpResponse('This is Homepage')
+    return render(request, 'homepage.html')
 
 
 def register(request):
@@ -37,3 +41,28 @@ def register(request):
     }
     
     return render(request, 'users/registration.html', context)
+
+
+
+    def user_login(request):
+        if request.method == 'POST' :
+            username = request.POST.get('username')
+            password = request.POST.get('password')
+
+            user = authenticate(username=username, password = password)
+
+            if user:
+                if user.is_active:
+                    login(request, user)
+                    return HttpResponseRedirect(reverse('homepage'))
+                else:
+                    return HttpResponse('Account is Deactivated')
+            else:
+                return HttpResponse("Please User Correct Id and Password")
+        else:
+            render(request, 'users/login.html')
+
+@login_required
+def user_logout(request):
+    logout(request)
+    return HttpResponseRedirect(reverse('homepage'))
