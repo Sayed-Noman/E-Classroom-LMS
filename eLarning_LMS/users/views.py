@@ -13,7 +13,7 @@ def index(request):
 def register(request):
     registered  = False
 
-    if register.methode == 'POST':
+    if request.method == 'POST':
         user_form = UserForm(data = request.POST)
         profile_form = UserProfileInfoForm(data= request.POST)
 
@@ -43,24 +43,23 @@ def register(request):
     return render(request, 'users/registration.html', context)
 
 
+def user_login(request):
+    if request.method == 'POST' :
+        username = request.POST.get('username')
+        password = request.POST.get('password')
 
-    def user_login(request):
-        if request.method == 'POST' :
-            username = request.POST.get('username')
-            password = request.POST.get('password')
+        user = authenticate(username=username, password = password)
 
-            user = authenticate(username=username, password = password)
-
-            if user:
-                if user.is_active:
-                    login(request, user)
-                    return HttpResponseRedirect(reverse('homepage'))
-                else:
-                    return HttpResponse('Account is Deactivated')
+        if user:
+            if user.is_active:
+                login(request, user)
+                return HttpResponseRedirect(reverse('homepage'))
             else:
-                return HttpResponse("Please User Correct Id and Password")
+                return HttpResponse('Account is Deactivated')
         else:
-            render(request, 'users/login.html')
+            return HttpResponse("Please User Correct Id and Password")
+    else:
+        return render(request, 'users/login.html')
 
 @login_required
 def user_logout(request):

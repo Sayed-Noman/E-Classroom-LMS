@@ -1,0 +1,25 @@
+{% extends 'homepage.html' %}
+
+{% block content %}
+    {% if registered %}
+        <h1>Thank you for registering</h1>
+    {% else %}
+        <h3>Fill this form: </h3>
+        <form method = 'post' enctype='multipart/form-data'>
+            {% csrf_token %}
+            {{ user_form}}
+            {{profile_form}}
+             <input type='submit' value='Register' class='btn btn-primary btn-block'>
+        </form>
+    
+    
+    {% endif %}
+
+    
+        
+       
+
+    
+
+{% endblock content %}
+    	
