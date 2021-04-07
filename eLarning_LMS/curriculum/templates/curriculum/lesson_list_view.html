@@ -4,7 +4,7 @@
 
     {% for lesson in subjects.lessons.all %}
     
-        <a href='#'>Chapter-{{lesson.position}}: {{lesson.name}}</a> <br>
+        <a href="{% url 'curriculum:lesson_details' slug=lesson.slug subject=subjects.slug standard=lesson.standard.slug %}">Chapter-{{lesson.position}}: {{lesson.name}}</a> <br>
     
     {% endfor %}
 
