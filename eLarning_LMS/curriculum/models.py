@@ -2,6 +2,7 @@ from django.db import models
 from  django.contrib.auth.models import User
 from django.template.defaultfilters import slugify
 import os
+from django.urls import reverse
 
 
 class standard(models.Model):
@@ -77,5 +78,8 @@ class lesson(models.Model):
         self.slug = slugify(self.name)
         super().save(*args, **kwargs)
 
+    def get_absolute_url(self):
+        return reverse("curriculum:lesson_list", kwargs={'slug':self.subject.slug, 'standard':self.standard.slug})
+    
     
 

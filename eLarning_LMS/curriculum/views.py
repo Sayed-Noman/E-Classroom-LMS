@@ -35,8 +35,6 @@ class lessonCreateView(CreateView):
         return reverse_lazy('curriculum:lesson_list',kwargs={
             'standard' : standard.slug,'slug':self.object.slug})
 
-
-
     def form_valid(self, form, *args, **kwargs):
         self.object = self.get_object()
         fm = form.save(commit = False)
@@ -46,3 +44,19 @@ class lessonCreateView(CreateView):
         fm.save()
 
         return HttpResponseRedirect(self.get_success_url())
+
+class lessonUpdateView(UpdateView):
+    fields =('name','position','video','ppt','notes')
+    model=lesson
+    template_name='curriculum/lesson_update.html'
+    context_object_name='lessons'
+
+class lessonDeleteView(DeleteView):
+    context_object_name='lessons'
+    model=lesson
+    template_name='curriculum/lesson_delete.html'
+
+    def get_success_url(self):
+        standard=self.object.standard
+        subject = self.object.subject
+        return reverse_lazy('curriculum:lesson_list',kwargs={'standard':standard.slug,'slug':subject.slug})

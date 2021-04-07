@@ -2,7 +2,9 @@
 
 {% block content %}
 
-<p>Created On {{lessons.created_at}} by {{lessons.created_by}}</p> <br>
+    <p>Created On {{lessons.created_at}} by {{lessons.created_by}}</p> <br>
+    <a href="{% url 'curriculum:lesson_update'  standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug %}">Update Lesson</a>
+    <a href="{% url 'curriculum:lesson_delete'  standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug %}">Delete Lesson</a>
 
 
 {% endblock content %}
