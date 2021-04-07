@@ -17,7 +17,13 @@
             {% else %}
                 <a href="{% url 'login' %}">Login</a>
             {% endif %}
+
+            <a href='{% url 'admin:index' %}'>Admin</a>          
+            <a href='{% url 'curriculum:standard_list' %}'>Standards</a>          
+
             <h1>This is Homepage</h1>
+            
+            
             {% block content %}
             {% endblock content %}
         </div>

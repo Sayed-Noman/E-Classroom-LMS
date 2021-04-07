@@ -1,0 +1,13 @@
+{% extends 'homepage.html'%}
+
+
+{% block content %}
+
+    {% for standard in standards %}
+       <a href="{% url 'curriculum:subject_list' slug=standard.slug %}"> {{standard.name}} </a> <br>
+
+    {% endfor %}
+
+{% endblock content %}
+
+

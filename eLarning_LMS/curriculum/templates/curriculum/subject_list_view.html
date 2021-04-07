@@ -1,0 +1,11 @@
+{% extends 'homepage.html' %}
+
+{% block content %}
+    {% for subject in standards.subjects.all %}
+        {{subject.name}}
+        {{subject.description|truncatechars_html:80}}
+    {% endfor %}
+
+{% endblock content %}
+
+
