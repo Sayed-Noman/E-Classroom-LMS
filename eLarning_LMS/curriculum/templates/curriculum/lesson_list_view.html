@@ -1,0 +1,16 @@
+{% extends 'homepage.html' %}
+
+{% block content %}
+
+    {% for lesson in subjects.lessons.all %}
+    
+        <a href='#'>Chapter-{{lesson.position}}: {{lesson.name}}</a> <br>
+    
+    {% endfor %}
+
+
+{% endblock content %}
+
+
+
+

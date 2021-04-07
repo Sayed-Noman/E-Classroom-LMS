@@ -7,4 +7,6 @@ app_name = 'curriculum'
 urlpatterns = [
     path('',views.standardListView.as_view(),name='standard_list'),
     path('<slug:slug>/',views.subjectListView.as_view(),name='subject_list'),
+    path('<str:standard>/<slug:slug>/', views.lessonListView.as_view(),name='lesson_list'),
+
 ]

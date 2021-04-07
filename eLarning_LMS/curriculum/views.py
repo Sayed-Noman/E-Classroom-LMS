@@ -11,3 +11,9 @@ class subjectListView(DetailView):
     context_object_name='standards'
     model=standard
     template_name='curriculum/subject_list_view.html'
+
+class lessonListView(DetailView):
+    context_object_name = 'subjects'
+    model= subject
+    template_name = 'curriculum/lesson_list_view.html'
+    
