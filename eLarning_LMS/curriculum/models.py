@@ -83,3 +83,33 @@ class lesson(models.Model):
     
     
 
+
+
+
+class comment(models.Model):
+    lesson_name = models.ForeignKey(lesson,null=True,on_delete=models.CASCADE,related_name='comments')
+    comment_name = models.CharField(max_length=150, blank=True)
+    #reply = models.ForeignKey("Comment",null=True, blank = True, on_delete = models.CASCADE, related_name='replies')
+    author = models.ForeignKey(User,on_delete=models.CASCADE)
+    body =  models.TextField(max_length=500)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *args, **kwargs):
+        self.comment_name = slugify("Comment by"+"-"+str(self.author)+str(self.date_added))
+        super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.comment_name
+    
+    class Meta:
+        ordering = ['-date_added']
+
+
+class reply(models.Model):
+    comment_name = models.ForeignKey(comment,on_delete=models.CASCADE,related_name='replies')
+    reply_body = models.TextField(max_length=500)
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return "reply to "+str(self.comment_name.comment_name)

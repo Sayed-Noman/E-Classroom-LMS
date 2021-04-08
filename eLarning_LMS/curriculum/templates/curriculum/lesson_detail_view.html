@@ -6,7 +6,32 @@
     <a href="{% url 'curriculum:lesson_update'  standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug %}">Update Lesson</a>
     <a href="{% url 'curriculum:lesson_delete'  standard=lessons.standard.slug subject=lessons.subject.slug slug=lessons.slug %}">Delete Lesson</a>
 
+    <h4>Post Your Comment Here</h4>
+    <form method="post">
+        <div class="form-group">
+            {% csrf_token %}
+            {{form.as_p}}
+            <input type='submit' name="form" value='Add comment' class='btn btn-primary btn-sm'>
+        </div>
+    </form>
 
+    {% for comment in lessons.comments.all %}
+        <h4>{{comment.author}}<small><i> Posted on {{comment.date_added}}</i></small></h4>
+        <p>{{comment.body}}</p>
+            {% for reply in comment.replies.all %}
+                <h5>{{reply.author}} <small><i> Posted on {{reply.date_added}}</i></small></h5>
+                <p>{{reply.reply_body}}</p>
+            {% endfor %}
+            <!--- form for post reply -->
+            <form method='POST'>
+            
+                <input type='hidden' name="comment.id" value="{{comment.id}}">
+                <input type='hidden' name="comment.comment_name" value="{{comment.comment_name}}">
+                {% csrf_token %}
+                {{form2.as_p}}
+                <input type="submit" name="form2" value="Add reply"class="btn btn-warning btn-sm">
+            </form>
+    {% endfor %}
 {% endblock content %}
 
 
